@@ -1,7 +1,4 @@
-os
-random
-disord
-time
+disord.py
 asyncio
 dotenv
 discord.ext
