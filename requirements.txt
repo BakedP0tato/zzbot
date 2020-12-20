@@ -1,4 +1,4 @@
-disord.py
+discord.py
 asyncio
 dotenv
 discord.ext
