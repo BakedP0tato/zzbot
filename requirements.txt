@@ -1,0 +1,7 @@
+os
+random
+disord
+time
+asyncio
+dotenv
+discord.ext
