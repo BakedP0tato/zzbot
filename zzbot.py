@@ -145,8 +145,8 @@ async def fight(ctx, member: discord.Member):
     else:
         await ctx.send('OK')
 
-@bot.command(help='Basically a reminder, but it kills you')
-async def kill_reminder(ctx):
+@bot.command(help='boom')
+async def bomb(ctx):
     await ctx.send('Set timer: hours? (0 to 23)')
     msg = await bot.wait_for('message', check=check(ctx), timeout=30)
     hours = int(msg.content)
