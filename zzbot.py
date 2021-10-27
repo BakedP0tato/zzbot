@@ -5,6 +5,7 @@ import time
 from discord.ext import commands
 import asyncio
 
+#os.environ["DC_TOKEN"]
 TOKEN=os.environ["DC_TOKEN"]
 bot = commands.Bot(command_prefix='>')
 
@@ -143,7 +144,7 @@ async def fight(ctx, member: discord.Member):
     elif member == ctx.author:
         await ctx.send('You don\'t get to fight yourself.')
     else:
-        await ctx.send('OK')
+        await ctx.send('in production lol')
 
 @bot.command(help='boom')
 async def bomb(ctx):
@@ -169,7 +170,7 @@ async def bomb(ctx):
                 response = 'Ok, timer set: '+str(hours)+':'+str(minutes)+':'+str(seconds)
                 await ctx.send(response)
                 await asyncio.sleep(sleepfor)
-                await ctx.send('Zzbot killed {}'.format(ctx.author.mention))
+                await ctx.send('{} was exploded'.format(ctx.author.mention))
 
 @bot.event
 async def on_command_error(ctx, error):
