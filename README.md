@@ -1,4 +1,3 @@
 # zzbot 2.0
-I returned to researching discord API after 9 months.
 
-and I ditched the old zzbot because it is too messy.
+A discord bot made by myself, kind of a self learn project to learn more about real world programming. I am also learning how to use Github properly after the previous catastrophic failure caused by lack of experience.
