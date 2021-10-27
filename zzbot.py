@@ -5,7 +5,7 @@ import time
 from discord.ext import commands
 import asyncio
 
-TOKEN='OTAyODAwODkxMDYzNzI2MDkw.YXjs2Q.4Y6SKjEFwVYzEXdFwwpFyl71nrw'
+TOKEN=os.environ["DC_TOKEN"]
 bot = commands.Bot(command_prefix='>')
 
 @bot.event
