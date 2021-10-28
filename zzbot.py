@@ -17,8 +17,8 @@ async def on_ready():
 @bot.command(help='Checks the bot information')
 async def zzbot(ctx):
     await ctx.send('Bot name: Zzbot')
-    await ctx.send('Bot programmer: BakedP0tato#3698')
-    await ctx.send('Bot version: v0.8')
+    await ctx.send('Bot programmer: Charcoal#3698')
+    await ctx.send('Bot version: v2.0')
     await ctx.send('Date created: 2020-11-23 13:08:08.474000')
     await ctx.send('Primary function: currently undetermined')
 
@@ -88,7 +88,7 @@ async def hi(ctx):
     await ctx.send(response)
 
 @bot.command(name='dice', help='Simulates rolling dice.')
-async def roll_dice(ctx, number_of_dice: int, number_of_sides: int):
+async def roll_dice(ctx, number_of_dice: int, number_of_sides: int=6):
     dice = [
         str(random.choice(range(1, number_of_sides + 1)))
         for _ in range(number_of_dice)
