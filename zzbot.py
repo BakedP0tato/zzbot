@@ -7,7 +7,10 @@ import asyncio
 
 #os.environ["DC_TOKEN"]
 TOKEN=os.environ["DC_TOKEN"]
-bot = commands.Bot(command_prefix='>')
+intents = discord.Intents.default()
+intents.members = True
+
+bot = commands.Bot(command_prefix='>', intents=intents)
 
 @bot.event
 async def on_ready():
@@ -62,11 +65,12 @@ def check(context):
         return context.author == message.author and context.channel == message.channel
     return inner_check
     
-@bot.command(help='Like a parrot, ya know')
-async def repeat(ctx, *, sentence):
+@bot.command(help='Speaks stuff', pass_context=True)
+async def say(ctx, *, sentence):
     if 'zzbot gei' in sentence:
         await ctx.send('NO HAHA')
     else:
+        await ctx.message.delete()
         await ctx.send(sentence)
         
 @bot.command(help='Capitalize every letter of the sentence')
@@ -88,7 +92,7 @@ async def hi(ctx):
     await ctx.send(response)
 
 @bot.command(name='dice', help='Simulates rolling dice.')
-async def roll_dice(ctx, number_of_dice: int, number_of_sides: int=6):
+async def roll_dice(ctx, number_of_dice: int=1, number_of_sides: int=6):
     dice = [
         str(random.choice(range(1, number_of_sides + 1)))
         for _ in range(number_of_dice)
@@ -117,8 +121,12 @@ async def rps(ctx):
 
 @bot.command(name='server', help='Some info on the server')
 async def fetchServerInfo(ctx):
-	await ctx.send(f'Server Name: {ctx.guild.name}')
-	await ctx.send(f'Server Size (including bots): {ctx.guild.member_count}')
+    num_members = sum(not member.bot for member in ctx.guild.members)
+    #num_bots = sum(member.bot for member in ctx.guild.members)
+    num_bots = ctx.guild.member_count - num_members
+    await ctx.send(f'Server Name: {ctx.guild.name}')
+    await ctx.send(f'Members: {num_members}')
+    await ctx.send(f'Bots: {num_bots}')
 
 @bot.command(help='See some info on a member in the server')
 async def joined(ctx, *, member: discord.Member):
