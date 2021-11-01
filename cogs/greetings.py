@@ -3,8 +3,7 @@ import discord
 import random
 
 class Greetings(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
+    def __init__(self):
         self._last_member = None
 
     @commands.Cog.listener()
@@ -33,5 +32,5 @@ class Greetings(commands.Cog):
             await ctx.send('Hello {0.name}... This feels familiar.'.format(member))
         self._last_member = member
     
-def setup(bot): 
-    bot.add_cog(Greetings(bot))
+def setup(bot: commands.Bot): 
+    bot.add_cog(Greetings())
