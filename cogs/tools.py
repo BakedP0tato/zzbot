@@ -61,7 +61,7 @@ class Tools(commands.Cog):
                             await message.edit(content=f"Timer: {hours}:{minutes}:{seconds}")
                         except NotFound:
                             await ctx.send('Timer not found, do you want it to continue? y/n')
-                            msg = await commands.wait_for('message', check=check(ctx), timeout=30)
+                            msg = await self.bot.wait_for('message', check=check(ctx), timeout=30)
                             if (msg.content).lower() == 'y':
                                 message = await ctx.send(f"Timer: {hours}:{minutes}:{seconds}")
                             else:
