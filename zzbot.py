@@ -112,20 +112,6 @@ async def rps(ctx):
     bot_choice = random.choice(outcomes)
     await ctx.send(bot_choice)
 
-@bot.command(name='server', help='Some info on the server')
-async def fetchServerInfo(ctx):
-    num_members = sum(not member.bot for member in ctx.guild.members)
-    #num_bots = sum(member.bot for member in ctx.guild.members)
-    num_bots = ctx.guild.member_count - num_members
-    await ctx.send(f'Server Name: {ctx.guild.name}')
-    await ctx.send(f'Members: {num_members}')
-    await ctx.send(f'Bots: {num_bots}')
-
-@bot.command(help='See some info on a member in the server')
-async def joined(ctx, *, member: discord.Member):
-    fmt='{0} joined on {0.joined_at} and has {1} roles.'
-    await ctx.send(fmt.format(member, len(member.roles)))
-
 @bot.command(help='Lol')
 async def rickroll(ctx, * ,member: discord.Member):
     response = 'Zzbot executed {0}'
