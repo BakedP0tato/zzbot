@@ -13,12 +13,14 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def highlow(self, ctx, highest=100, lowest=1):
+        if lowest >= highest:
+            raise Exception("Incorrect")
         ran = randint(1,highest)
         await ctx.send(f'A random number has been chosen from {lowest} to {highest}')
         game = True
         guesscount = 0
         while game:
-            await ctx.send(f'Try to guess the number :{lowest} to {highest} (Any non-integer to quit)')
+            await ctx.send(f'Try to guess the number : {lowest} to {highest} (Any non-integer to quit)')
             msg = await self.bot.wait_for(event='message', check=check(ctx), timeout=60)
             try:
                 guess = int(msg.content)
@@ -29,6 +31,7 @@ class Fun(commands.Cog):
                 guesscount += 1
                 if guess == ran:
                     await ctx.send('Bravo, you got it')
+                    await ctx.send(f'Took you {guesscount} guess(es).')
                     break
                 elif guess > ran:
                     await ctx.send('Too high')
@@ -37,8 +40,7 @@ class Fun(commands.Cog):
                     await ctx.send('Too low')
                     lowest = guess + 1
             else:
-                await ctx.send('Bro')
-        await ctx.send(f'Took you {guesscount} guess(es).')
+                await ctx.send('Out of range')
         
 def setup(bot): # a extension must have a setup function
 	bot.add_cog(Fun(bot))

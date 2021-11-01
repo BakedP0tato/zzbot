@@ -1,6 +1,5 @@
 from discord.ext import commands
 from discord.errors import NotFound
-import discord
 import asyncio
 
 def check(context):
