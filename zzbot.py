@@ -17,28 +17,12 @@ async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="the world burning"))
 
-class Greetings(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
-        self._last_member = None
-
-    @commands.Cog.listener()
-    async def on_member_join(self, member):
-        channel = member.guild.system_channel
-        if channel is not None:
-            await channel.send('Welcome {0.mention}.'.format(member))
-
-    @commands.command()
-    async def hello(self, ctx, *, member: discord.Member = None):
-        """Says hello"""
-        member = member or ctx.author
-        if self._last_member is None or self._last_member.id != member.id:
-            await ctx.send('Hello {0.name}~'.format(member))
-        else:
-            await ctx.send('Hello {0.name}... This feels familiar.'.format(member))
-        self._last_member = member
-
-bot.add_cog(Greetings(bot))
+for filename in os.listdir('./cogs'):
+  if filename.endswith('.py'):
+    bot.load_extension(f'cogs.{filename[:-3]}')
+    
+  else:
+    print(f'Unable to load {filename[:-3]}')
 
 @bot.command(help='Checks the bot information')
 async def zzbot(ctx):
@@ -95,28 +79,10 @@ async def say(ctx, *, sentence):
     else:
         await ctx.message.delete()
         await ctx.send(sentence)
-        
-@bot.command(help='Capitalize every letter of the sentence')
-async def upper(ctx, *, sentence):
-    await ctx.send(sentence.upper())
-
-@bot.command(help='Uncapitalize every letter of the sentence')
-async def lower(ctx, *, sentence):
-    await ctx.send(sentence.lower())
 
 @bot.command(help='Checks the ping')
 async def ping(ctx):
     await ctx.send(f'Pong! {round (bot.latency * 1000)}ms ')
-
-@bot.command(help='A simple greeting')
-async def hi(ctx):
-    greetings = [
-        'Hello',
-        'Greetings',
-        'Hi',
-    ]
-    response = random.choice(greetings)
-    await ctx.send(response)
 
 @bot.command(name='dice', help='Simulates rolling dice.')
 async def roll_dice(ctx, number_of_dice: int=1, number_of_sides: int=6):
