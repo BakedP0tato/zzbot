@@ -6,7 +6,6 @@ from discord.errors import NotFound
 from discord.ext import commands
 import asyncio
 
-#os.environ["DC_TOKEN"]
 TOKEN=os.environ["DC_TOKEN"]
 intents = discord.Intents.default()
 intents.members = True
@@ -165,7 +164,10 @@ async def bomb(ctx):
                         minutes = 59
                         seconds = 59
                     elif seconds <= 0 and minutes <= 0 and hours <= 0:
-                        await message.edit(content="Ended!")
+                        try:
+                            await message.edit(content="Ended!")
+                        except NotFound:
+                            pass
                         break
                     try:
                         await message.edit(content=f"Timer: {hours}:{minutes}:{seconds}")
