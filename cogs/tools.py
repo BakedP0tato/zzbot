@@ -1,6 +1,9 @@
 from discord.ext import commands
 from discord.errors import NotFound
+import discord
 import asyncio
+
+from discord.ext.commands.bot import Bot
 
 def check(context):
     def inner_check(message):
@@ -20,19 +23,19 @@ class Tools(commands.Cog):
     @commands.command(help='boom')
     async def bomb(self, ctx):
         await ctx.send('Set timer: hours? (0 to 23)')
-        msg = await commands.wait_for('message', check=check(ctx), timeout=30)
+        msg = await self.bot.wait_for('message', check=check(ctx), timeout=30)
         hours = int(msg.content)
         if 0 > hours > 23:
             await ctx.send('No')
         else:
             await ctx.send('Set timer: minutes? (0 to 59)')
-            msg = await commands.wait_for('message', check=check(ctx), timeout=30)
+            msg = await self.bot.wait_for('message', check=check(ctx), timeout=30)
             minutes = int(msg.content)
             if 0 > minutes > 59:
                 await ctx.send('No')
             else:
                 await ctx.send('Set timer: seconds? (0 to 59)')
-                msg = await commands.wait_for('message', check=check(ctx), timeout=30)
+                msg = await self.bot.wait_for('message', check=check(ctx), timeout=30)
                 seconds = int(msg.content)
                 if 0 > seconds > 59:
                     await ctx.send('No')
