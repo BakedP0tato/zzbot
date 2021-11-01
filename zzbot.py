@@ -2,6 +2,7 @@ import os
 import random
 import discord
 import time
+from discord.errors import NotFound
 from discord.ext import commands
 import asyncio
 
@@ -138,19 +139,19 @@ async def bomb(ctx):
     await ctx.send('Set timer: hours? (0 to 23)')
     msg = await bot.wait_for('message', check=check(ctx), timeout=30)
     hours = int(msg.content)
-    if hours > 23:
+    if 0 > hours > 23:
         await ctx.send('No')
     else:
         await ctx.send('Set timer: minutes? (0 to 59)')
         msg = await bot.wait_for('message', check=check(ctx), timeout=30)
         minutes = int(msg.content)
-        if minutes > 59:
+        if 0 > minutes > 59:
             await ctx.send('No')
         else:
             await ctx.send('Set timer: seconds? (0 to 59)')
             msg = await bot.wait_for('message', check=check(ctx), timeout=30)
             seconds = int(msg.content)
-            if seconds > 59:
+            if 0 > seconds > 59:
                 await ctx.send('No')
             else:
                 message = await ctx.send(f"Timer: {hours}:{minutes}:{seconds}")
@@ -166,7 +167,15 @@ async def bomb(ctx):
                     elif seconds <= 0 and minutes <= 0 and hours <= 0:
                         await message.edit(content="Ended!")
                         break
-                    await message.edit(content=f"Timer: {hours}:{minutes}:{seconds}")
+                    try:
+                        await message.edit(content=f"Timer: {hours}:{minutes}:{seconds}")
+                    except NotFound:
+                        await ctx.send('Timer not found, do you want it to continue? y/n')
+                        msg = await bot.wait_for('message', check=check(ctx), timeout=30)
+                        if (msg.content).lower() == 'y':
+                            message = await ctx.send(f"Timer: {hours}:{minutes}:{seconds}")
+                        else:
+                            break
                     await asyncio.sleep(1)
                 await ctx.send('{} was exploded'.format(ctx.author.mention))
 
