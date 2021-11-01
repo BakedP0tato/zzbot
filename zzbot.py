@@ -77,6 +77,10 @@ async def say(ctx, *, sentence):
 async def upper(ctx, *, sentence):
     await ctx.send(sentence.upper())
 
+@bot.command(help='Uncapitalize every letter of the sentence')
+async def lower(ctx, *, sentence):
+    await ctx.send(sentence.lower())
+
 @bot.command(help='Checks the ping')
 async def ping(ctx):
     await ctx.send(f'Pong! {round (bot.latency * 1000)}ms ')
