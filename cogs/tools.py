@@ -6,11 +6,11 @@ class Tools(commands.Cog):
         self._last_member = None
 
     @commands.command(help='Capitalize every letter of the sentence')
-    async def upper(ctx, *, sentence):
+    async def upper(self, ctx, *, sentence):
         await ctx.send(sentence.upper())
 
     @commands.command(help='Uncapitalize every letter of the sentence')
-    async def lower(ctx, *, sentence):
+    async def lower(self, ctx, *, sentence):
         await ctx.send(sentence.lower())
     
 def setup(bot): 
