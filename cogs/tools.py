@@ -18,7 +18,7 @@ class Tools(commands.Cog):
         await ctx.send(sentence.lower())
 
     @commands.command(help='boom')
-    async def bomb(ctx):
+    async def bomb(self, ctx):
         await ctx.send('Set timer: hours? (0 to 23)')
         msg = await commands.wait_for('message', check=check(ctx), timeout=30)
         hours = int(msg.content)
