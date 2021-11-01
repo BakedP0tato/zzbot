@@ -153,10 +153,21 @@ async def bomb(ctx):
             if seconds > 59:
                 await ctx.send('No')
             else:
-                sleepfor = seconds+minutes*60+hours*3600
-                response = 'Ok, timer set: '+str(hours)+':'+str(minutes)+':'+str(seconds)
-                await ctx.send(response)
-                await asyncio.sleep(sleepfor)
+                message = await ctx.send(f"Timer: {hours}:{minutes}:{seconds}")
+                while True:
+                    seconds -= 1
+                    if seconds <= 0 and minutes > 0:
+                        minutes -= 1
+                        seconds = 59
+                    elif seconds <= 0 and minutes <= 0 and hours > 0:
+                        hours -= 1
+                        minutes = 59
+                        seconds = 59
+                    elif seconds <= 0 and minutes <= 0 and hours <= 0:
+                        await message.edit(content="Ended!")
+                        break
+                    await message.edit(content=f"Timer: {hours}:{minutes}:{seconds}")
+                    await asyncio.sleep(1)
                 await ctx.send('{} was exploded'.format(ctx.author.mention))
 
 @bot.event
